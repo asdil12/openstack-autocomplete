@@ -1,3 +1,6 @@
+# bash completion for openstack nova-manage
+# by Dominik Heidler <dheidler suse.de>
+
 _nova_manage_opts="" # lazy init
 _nova_manage_opts_exp="" # lazy init
 

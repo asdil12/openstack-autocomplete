@@ -1,3 +1,6 @@
+# bash completion for openstack keystone
+# by Dominik Heidler <dheidler suse.de>
+
 _keystone_opts="" # lazy init
 _keystone_opts_exp="" # lazy init
 _keystone()

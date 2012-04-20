@@ -1,3 +1,6 @@
+# bash completion for openstack glance
+# by Dominik Heidler <dheidler suse.de>
+
 _glance_opts="" # lazy init
 _glance_opts_exp="" # lazy init
 _glance()

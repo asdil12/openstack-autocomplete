@@ -1,3 +1,6 @@
+# bash completion for openstack nova
+# by Dominik Heidler <dheidler suse.de>
+
 _nova_opts="" # lazy init
 _nova_flags="" # lazy init
 _nova_opts_exp="" # lazy init
