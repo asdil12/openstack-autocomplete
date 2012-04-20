@@ -1,5 +1,24 @@
 _nova_manage_opts="" # lazy init
 _nova_manage_opts_exp="" # lazy init
+
+# this will only work with bash 4
+## declare dict
+#declare -A _nova_manage_subopts
+
+# dict hack for bash 3
+# ...yea yea and eval is evil and you
+# could use it to inject malicious
+# code to .....yourself?
+# bash 3 sucks...
+
+_set_nova_manage_subopts () {
+  eval _nova_manage_subopts_"$1"='$2'
+}
+
+_get_nova_manage_subopts () {
+  eval echo '${_nova_manage_subopts_'"$1"'#_nova_manage_subopts_}'
+}
+
 _nova_manage()
 {
 	local cur prev subopts
@@ -13,8 +32,14 @@ _nova_manage()
 	fi
 
 	if [[ " `echo $_nova_manage_opts` " =~ " $prev " ]] ; then
-		subopts="`nova-manage $prev bash-completion 2>/dev/null | sed -e "1d"`"
-		COMPREPLY=($(compgen -W "${subopts}" -- ${cur}))  
+		#if [ "x${_nova_manage_subopts["$prev"]}" == "x" ] ; then
+		if [ "x$(_get_nova_manage_subopts "$prev")" == "x" ] ; then
+			subopts="`nova-manage $prev bash-completion 2>/dev/null | sed -e "1d"`"
+			#_nova_manage_subopts+=( ["$prev"]="$subopts" )
+			_set_nova_manage_subopts "$prev" "$subopts"
+		fi
+		#COMPREPLY=($(compgen -W "${_nova_manage_subopts["$prev"]}" -- ${cur}))
+		COMPREPLY=($(compgen -W "$(_get_nova_manage_subopts "$prev")" -- ${cur}))
 	elif [[ ! " ${COMP_WORDS[@]} " =~ " "($_nova_manage_opts_exp)" " ]] ; then
 		COMPREPLY=($(compgen -W "${_nova_manage_opts}" -- ${cur}))  
 	fi
