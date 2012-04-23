@@ -18,7 +18,7 @@ _nova()
 		_nova_opts_exp="`echo "$_nova_opts" | sed -e "s/\s/|/g"`"
 	fi
 
-	if [[ " ${COMP_WORDS[@]} " =~ " "($_nova_opts_exp)" " ]] ; then
+	if [[ " ${COMP_WORDS[@]} " =~ " "($_nova_opts_exp)" " && "$prev" != "help" ]] ; then
 		COMPREPLY=($(compgen -W "${_nova_flags}" -- ${cur}))  
 	else
 		COMPREPLY=($(compgen -W "${_nova_opts}" -- ${cur}))  
