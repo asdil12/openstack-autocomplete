@@ -16,7 +16,7 @@ _glance()
 	fi
 
 	if [[ ! " ${COMP_WORDS[@]} " =~ " "($_glance_opts_exp)" " || "$prev" == "help" ]] ; then
-		COMPREPLY=($(compgen -W "${_glance_opts}" -- ${cur}))  
+		COMPREPLY=($(compgen -W "${_glance_opts}" -- ${cur}))
 	fi
 	return 0
 }

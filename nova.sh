@@ -6,7 +6,7 @@ _nova_flags="" # lazy init
 _nova_opts_exp="" # lazy init
 _nova()
 {
-	local cur prev
+	local cur prev nbc cflags
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
@@ -19,9 +19,11 @@ _nova()
 	fi
 
 	if [[ " ${COMP_WORDS[@]} " =~ " "($_nova_opts_exp)" " && "$prev" != "help" ]] ; then
-		COMPREPLY=($(compgen -W "${_nova_flags}" -- ${cur}))  
+		COMPLETION_CACHE=~/.novaclient/*/*-cache
+		cflags="$_nova_flags "$(cat $COMPLETION_CACHE 2> /dev/null | tr '\n' ' ')
+		COMPREPLY=($(compgen -W "${cflags}" -- ${cur}))
 	else
-		COMPREPLY=($(compgen -W "${_nova_opts}" -- ${cur}))  
+		COMPREPLY=($(compgen -W "${_nova_opts}" -- ${cur}))
 	fi
 	return 0
 }
