@@ -32,7 +32,7 @@ _crowbar()
 
 	if [[ " `echo $_crowbar_opts` " =~ " $prev " ]] && [[ "$pprev" == "crowbar" ]] ; then
 		if [ "x$(_get_crowbar_subopts "$prev")" == "x" ] ; then
-			subopts=`crowbar mysql | grep -v "API help" | sed  -e '1d' -e 's/^  \([^ ]*\).*$/\1/' -e '/^$/d'`
+			subopts=`crowbar $prev | grep -v "API help" | sed  -e '1d' -e 's/^  \([^ ]*\).*$/\1/' -e '/^$/d'`
 			_set_crowbar_subopts "$prev" "$subopts"
 		fi
 		COMPREPLY=($(compgen -W "$(_get_crowbar_subopts "$prev")" -- ${cur}))
